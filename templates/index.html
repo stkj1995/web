@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <title>X</title>
+</head>
+
+<body>
+
+    <header>
+        <div>X</div>
+        <div class="actions">
+            <div>Login</div>
+            <div class="button">Signup</div>
+        </div>
+
+    </header>
+
+    <main>
+
+
+    </main>
+    <h1>
+        {{ user.user_pk }}
+    </h1>
+
+    <p>
+        {{ user.user_first_name }}
+    </p>
+
+    <p>
+        {{ user.user_last_name }}
+    </p>
+
+    <p>
+        {{ user.user_username }}
+    </p>
+
+    <footer>
+
+
+    </footer>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+
+</html>

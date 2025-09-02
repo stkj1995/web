@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 1.1rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    > .actions {
+        display: flex;
+        gap: 1rem;
+    }
+    > .button {
+       border-radius: 50%; 
+       background-color: black;
+       color: white;
+    }
+}
+
