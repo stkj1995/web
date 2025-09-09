@@ -11,14 +11,14 @@ app = Flask(__name__)
 # friendly URL inspired on x.com
 # http://127.0.0.1/cph
 
-@app.get("/<username>")
-def view_index(username):
-    db, cursor = x.db()
-    q = "SELECT * FROM users WHERE user_username = %s"
-    cursor.execute(q, (username,))
-    user = cursor.fetchone()
-    ic(user)
-    return render_template("index.html", user=user)
+# @app.get("/<username>")
+# def view_index(username):
+#     db, cursor = x.db()
+#     q = "SELECT * FROM users WHERE user_username = %s"
+#     cursor.execute(q, (username,))
+#     user = cursor.fetchone()
+#     ic(user)
+#     return render_template("index.html", user=user)
     
 
 #######################################
@@ -27,13 +27,13 @@ def view_index(username):
 # In flask args is everything after the question mark
  
  
-@app.get("/search")
-def view_search():
-    name = request.args.get("first-name", "")
-    last_name = request.args.get("last-name", "")
-    year = request.args.get("year", "")
-    color = request.args.get("color", "")
-    return f"Hi {name} {last_name}, the year is {2025}. My favorite color is {color}"
+# @app.get("/search")
+# def view_search():
+#     name = request.args.get("first-name", "")
+#     last_name = request.args.get("last-name", "")
+#     year = request.args.get("year", "")
+#     color = request.args.get("color", "")
+#     return f"Hi {name} {last_name}, the year is {2025}. My favorite color is {color}"
 
 
     # Pass the name, last name and year

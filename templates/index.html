@@ -14,30 +14,42 @@
         <div>X</div>
         <div class="actions">
             <div>Login</div>
-            <div class="button">Signup</div>
+            <button>Signup</button>
         </div>
 
     </header>
 
     <main>
+        <section class="banner">
+            <div class="avatar"> </div>
+        </section>
+
+        <section class="data">
+            <button>Follow</button>
+
+            <p>
+                {{ user.user_first_name }}
+                {{ user.user_last_name }}
+            </p>
+
+            <p>
+                @{{ user.user_username }}
+            </p>
+        </section>
+
+        <section class="bio">
+            <p>{{user.user_bio}}</p>
 
 
+        </section>
+
+
+        <a href="https:// {{ user.user_website }}" target="_blank" rel="noopener">
+            {{ user.user_website }}
+        </a>
+
+        <section class=""></section>
     </main>
-    <h1>
-        {{ user.user_pk }}
-    </h1>
-
-    <p>
-        {{ user.user_first_name }}
-    </p>
-
-    <p>
-        {{ user.user_last_name }}
-    </p>
-
-    <p>
-        {{ user.user_username }}
-    </p>
 
     <footer>
 
