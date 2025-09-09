@@ -7,6 +7,99 @@ import x
 
 app = Flask(__name__)
 
+########################
+@app.get("/")
+def view_index():
+    pass
+
+########################
+@app.get("/signup")
+def view_signup():
+    pass
+
+########################
+@app.get("/home")
+def view_home():
+    pass
+
+########################
+@app.get("/explore")
+def view_explore():
+    pass
+
+########################
+@app.get("/notifications")
+def view_notifications():
+    pass
+
+########################
+@app.get("/messages")
+def view_messages():
+    pass
+
+########################
+@app.get("/bookmarks")
+def view_bookmarks():
+    pass
+
+########################
+@app.get("/list")
+def view_list():
+    pass
+
+########################
+@app.get("/profile")
+def view_profile():
+    pass
+
+########################
+@app.get("/more")
+def view_more():
+    pass
+
+
+# GET       is to get HTML
+# POST      used for saving data in the system
+# PUT       is used to update all the row except the id
+# PATCH     is used to update one or more cells
+# DELETE    is used to delete a resource
+
+########################
+########################
+########################
+
+#A post gets data from the form
+#The URL doesn't change
+@app.post("/tweet")
+def post_tweet():
+    pass
+
+########################
+########################
+########################
+
+@app.post("/search")
+def post_search():
+    pass
+
+########################
+########################
+########################
+
+@app.delete("/")
+def delete_like_tweet():
+    pass
+
+########################
+########################
+########################
+
+@app.put("/profile")
+def update_profile():
+    pass
+
+
+
 # main page
 # friendly URL inspired on x.com
 # http://127.0.0.1/cph
