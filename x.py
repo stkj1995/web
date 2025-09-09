@@ -4,6 +4,8 @@ import mysql.connector
 from icecream import ic
 ic.configureOutput(prefix=f'***** | ', includeContext=True)
 
+import hashlib
+
 
 ##############################
 def db():
@@ -15,6 +17,15 @@ def db():
     )
     cursor = db.cursor(dictionary=True)
     return db, cursor
+
+##############################
+def hash_password(password):
+    # Create a sha256 hash object
+    sha256_hash = hashlib.sha256()
+    # Update the hash object with the password (encoded as bytes)
+    sha256_hash.update(password.encode('utf-8'))
+    # Return the hexadecimal representation of the hash
+    return sha256_hash.hexdigest()
 
 
 
