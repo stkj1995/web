@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
  
 from icecream import ic
 ic.configureOutput(prefix=f'----- | ', includeContext=True)
@@ -7,7 +7,11 @@ import x
 
  
 app = Flask(__name__)
+
+app.secret_key = "the secret"
  
+
+
 ##############################
 @app.get("/")
 def view_index():
@@ -30,11 +34,11 @@ def view_signup():
     finally:
         pass
 
-
 ##############################
 @app.get("/home")
 def view_home():
-    pass
+    # user_first_name = session["user_first_name"]
+    return render_template("home.html")
  
 ##############################
 @app.get("/explore")
@@ -92,11 +96,30 @@ def post_login():
     try:
         user_email = request.form.get("user_email", "")
         user_password = request.form.get("user_password", "")
-        return f"{user_email} {user_password}"
+        db, cursor = x.db()
+        q = "SELECT * FROM users WHERE user_email = %s AND user_password = %s"
+        cursor.execute(q, (user_email, user_password))
+        user = cursor.fetchone() # {user_pk:1, user_email:"", user_password:""....} We have this info from the database
+        session["user_email"] = user["user_email"]
+        session["user_first_name"] = user["user_first_name"]
+        return render_template("home.html", user_first_name=user["user_first_name"])
     except:
         pass
     finally:
         pass
+
+
+##############################
+@app.get("/logout")
+def logout():
+    # session.pop["user_email"]
+    # session.pop["user_first_name"]
+    session.clear() # removes everything
+    return redirect(url_for("view_index"))
+
+
+
+
  
 ##############################
 ##############################
@@ -144,8 +167,7 @@ def post_signup():
         # If there are 2 or more comments 
         cursor.execute(q, (user_email, hashed_password))
         db.commit()
-        return f"{user_email} {hashed_password}"
-   
+        return redirect(url_for("view_index"))
     except Exception as ex:
         ic(ex) #see exception in the terminal
         return str(ex) # show in the browser
@@ -158,12 +180,86 @@ def post_signup():
  
  
  
+##################################
+##################################
+##################################
+# TRANSACTION
+# begintransaction
+# commit
+# rollback
+
+
+@app.get("/transaction")
+def transaction():
+    try:
+        db, cursor = x.db()
+        db.start_transaction()
+
+        q = "UPDATE users SET user_password = %s WHERE user_pk = %s"
+        cursor.execute(q, ("oneoneone", 1)) # the "one" will be shown as new password in the database
+
+        q = "UPDATE users SET user_password = %s WHERE user_pk = %s"
+        cursor.execute(q, ("twotwotwo", 2)) # the "two" will be shown as new password in the database
+        db.commit()
+        return "ok" # this will be shown in browser, if it works OK
+    except Exception as ex: 
+        # ex is just a variable and the exception is an object
+        if "db" in locals(): db.rollback() # this makes the code save
+        ic(ex)
+        return str(ex) #this will be shown in browser, if it's wrong
+    finally: 
+        if "cursor" in locals(): cursor.close()
+        if "db" in locals(): db.close()
+
+
+
+##################################
+##################################
+##################################
+# Stored procedure
+
+@app.get("/stored-procedure")
+def stored_procedure():
+    try:
+        db, cursor = x.db()
+        db.start_transaction()
+        q = "CALL get_all_users()"
+        cursor.execute(q)
+        rows = cursor.fetchall()
+        ic(rows)
+        return "ok"
+    except Exception as ex:
+        ic(ex)
+        if "db" in locals(): db.rollback()
+        return str(ex)
+    finally:
+        if "cursor" in locals(): cursor.close()
+        if "db" in locals(): db.close()
  
  
  
- 
- 
- 
+##################################
+##################################
+##################################
+# Stored procedure
+
+@app.get("/stored-procedure-get-user")
+def stored_procedure_get_user():
+    try:
+        db, cursor = x.db()
+        db.start_transaction()
+        q = "CALL get_user(%s)"
+        cursor.execute(q, (1,))
+        row = cursor.fetchone()
+        ic(row)
+        return "ok"
+    except Exception as ex:
+        ic(ex)
+        if "db" in locals(): db.rollback()
+        return str(ex)
+    finally:
+        if "cursor" in locals(): cursor.close()
+        if "db" in locals(): db.close()
  
  
  
